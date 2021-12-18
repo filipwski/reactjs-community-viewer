@@ -7,11 +7,10 @@ const getToken = setContext(async () => {
   return { headers: { Authorization: `Bearer ${token}` } };
 });
 
-const httpsLink = createHttpLink({ uri: 'https://api.github.com/graphql' });
+const httpLink = createHttpLink({ uri: 'https://api.github.com/graphql' });
+const link = ApolloLink.from([getToken, httpLink])
 
-const link = ApolloLink.from([getToken, httpsLink])
-
-export const apiClient = new ApolloClient({
+export const client = new ApolloClient({
   cache: new InMemoryCache(),
   link,
 });
