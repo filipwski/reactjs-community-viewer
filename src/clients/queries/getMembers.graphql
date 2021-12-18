@@ -1,0 +1,24 @@
+query members($first: Int, $after: String) {
+  organization(login: "reactjs") {
+    membersWithRole(first: $first, after: $after) {
+      nodes {
+        name
+        url
+        repositories(privacy: PUBLIC) {
+          totalCount
+        }
+        gists(privacy: PUBLIC) {
+          totalCount
+        }
+        followers {
+          totalCount
+        }
+        contributionsCollection {
+          contributionCalendar {
+            totalContributions
+          }
+        }
+      }
+    }
+  }
+}

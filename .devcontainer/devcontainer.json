@@ -1,0 +1,5 @@
+{
+    "name": "reactjs-github-viewer",
+    "image": "mcr.microsoft.com/vscode/devcontainers/javascript-node:16-bullseye",
+    "remoteUser": "node"
+}
