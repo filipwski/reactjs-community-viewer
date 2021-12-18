@@ -1,7 +1,11 @@
-query members($first: Int, $after: String) {
+query members($cursor: String) {
   organization(login: "reactjs") {
-    membersWithRole(first: $first, after: $after) {
+    membersWithRole(first: 10, after: $cursor) {
+      pageInfo {
+        endCursor
+      }
       nodes {
+        id
         name
         url
         repositories(privacy: PUBLIC) {

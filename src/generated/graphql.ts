@@ -21972,19 +21972,22 @@ export type WorkflowRunPendingDeploymentRequestsArgs = {
 };
 
 export type MembersQueryVariables = Exact<{
-  first?: InputMaybe<Scalars['Int']>;
-  after?: InputMaybe<Scalars['String']>;
+  cursor?: InputMaybe<Scalars['String']>;
 }>;
 
 
-export type MembersQuery = { __typename?: 'Query', organization?: { __typename?: 'Organization', membersWithRole: { __typename?: 'OrganizationMemberConnection', nodes?: Array<{ __typename?: 'User', name?: string | null | undefined, url: any, repositories: { __typename?: 'RepositoryConnection', totalCount: number }, gists: { __typename?: 'GistConnection', totalCount: number }, followers: { __typename?: 'FollowerConnection', totalCount: number }, contributionsCollection: { __typename?: 'ContributionsCollection', contributionCalendar: { __typename?: 'ContributionCalendar', totalContributions: number } } } | null | undefined> | null | undefined } } | null | undefined };
+export type MembersQuery = { __typename?: 'Query', organization?: { __typename?: 'Organization', membersWithRole: { __typename?: 'OrganizationMemberConnection', pageInfo: { __typename?: 'PageInfo', endCursor?: string | null | undefined }, nodes?: Array<{ __typename?: 'User', id: string, name?: string | null | undefined, url: any, repositories: { __typename?: 'RepositoryConnection', totalCount: number }, gists: { __typename?: 'GistConnection', totalCount: number }, followers: { __typename?: 'FollowerConnection', totalCount: number }, contributionsCollection: { __typename?: 'ContributionsCollection', contributionCalendar: { __typename?: 'ContributionCalendar', totalContributions: number } } } | null | undefined> | null | undefined } } | null | undefined };
 
 
 export const MembersDocument = gql`
-    query members($first: Int, $after: String) {
+    query members($cursor: String) {
   organization(login: "reactjs") {
-    membersWithRole(first: $first, after: $after) {
+    membersWithRole(first: 10, after: $cursor) {
+      pageInfo {
+        endCursor
+      }
       nodes {
+        id
         name
         url
         repositories(privacy: PUBLIC) {
@@ -22019,8 +22022,7 @@ export const MembersDocument = gql`
  * @example
  * const { data, loading, error } = useMembersQuery({
  *   variables: {
- *      first: // value for 'first'
- *      after: // value for 'after'
+ *      cursor: // value for 'cursor'
  *   },
  * });
  */
