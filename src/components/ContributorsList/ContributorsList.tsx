@@ -79,7 +79,7 @@ export const ContributorsList = () => {
         <div className="contributors-list-container">
           <MemberTable columns={columns} data={members} />
           <button
-            onClick={() => onFetchMoreClick()}
+            onClick={onFetchMoreClick}
             className="fetch-more-button"
             disabled={allMembersDownloaded}
           >
