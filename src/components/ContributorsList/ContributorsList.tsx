@@ -47,6 +47,7 @@ export const ContributorsList = () => {
 
   const members = compact(data?.organization?.membersWithRole?.nodes);
   const cursor = data?.organization?.membersWithRole?.pageInfo.endCursor;
+  const allMembersDownloaded = !cursor;
 
   const onFetchMoreClick = () => fetchMore({
     variables: { cursor },
@@ -80,6 +81,7 @@ export const ContributorsList = () => {
           <button
             onClick={() => onFetchMoreClick()}
             className="fetch-more-button"
+            disabled={allMembersDownloaded}
           >
             Fetch more
           </button>
