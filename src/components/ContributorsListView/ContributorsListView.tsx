@@ -10,6 +10,28 @@ export const ContributorsListView = () => {
   const members = data?.organization?.membersWithRole?.nodes;
   const cursor = data?.organization?.membersWithRole?.pageInfo.endCursor;
 
+  const onFetchMoreClick = () => {
+    fetchMore({
+      variables: { cursor },
+      updateQuery: (previousResults, { fetchMoreResult }) => {
+        const oldMemberValues = previousResults.organization?.membersWithRole.nodes;
+        const newMemberValues = fetchMoreResult?.organization?.membersWithRole.nodes;
+        if (!newMemberValues || !oldMemberValues) return previousResults;
+
+        return {
+          organization: {
+            membersWithRole: {
+              pageInfo: {
+                endCursor: fetchMoreResult?.organization?.membersWithRole.pageInfo?.endCursor,
+              },
+              nodes: [...oldMemberValues, ...newMemberValues],
+            }
+          }
+        };
+      },
+    });
+  };
+
   return (
     <LoadingOverlay
       active={loading}
@@ -19,27 +41,7 @@ export const ContributorsListView = () => {
         (element) => <p key={element?.id} >{element?.name}</p>
       )}
       <button
-        onClick={() => {
-          fetchMore({
-            variables: { cursor },
-            updateQuery: (previousResults, { fetchMoreResult }) => {
-              const oldMemberValues = previousResults.organization?.membersWithRole.nodes;
-              const newMemberValues = fetchMoreResult?.organization?.membersWithRole.nodes;
-              if (!newMemberValues || !oldMemberValues) return previousResults;
-
-              return {
-                organization: {
-                  membersWithRole: {
-                    pageInfo: {
-                      endCursor: fetchMoreResult?.organization?.membersWithRole.pageInfo?.endCursor,
-                    },
-                    nodes: [...oldMemberValues, ...newMemberValues],
-                  }
-                }
-              };
-            },
-          })
-      }}
+        onClick={() => onFetchMoreClick()}
       >
         Fetch more
       </button>
