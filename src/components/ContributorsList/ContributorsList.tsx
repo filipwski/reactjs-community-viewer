@@ -1,3 +1,4 @@
+import { compact } from 'lodash';
 import { useMemo } from 'react';
 import LoadingOverlay from 'react-loading-overlay-ts';
 import { PacmanLoader } from 'react-spinners';
@@ -44,7 +45,7 @@ export const ContributorsList = () => {
 
   if (error) return <p>{error}</p>;
 
-  const members = data?.organization?.membersWithRole?.nodes;
+  const members = compact(data?.organization?.membersWithRole?.nodes);
   const cursor = data?.organization?.membersWithRole?.pageInfo.endCursor;
 
   const onFetchMoreClick = () => fetchMore({

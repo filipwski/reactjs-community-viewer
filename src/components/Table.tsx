@@ -1,8 +1,11 @@
+import { Dictionary } from "lodash";
 import { Column, useTable, useSortBy } from "react-table";
 
+type Data = Dictionary<string | number | Data | undefined | null>;
+
 type Props = {
-  columns: Column<any>[],
-  data: any[],
+  columns: Column<Data>[],
+  data: Data[],
 };
 export const Table = ({ columns, data }: Props) => {
   const {
