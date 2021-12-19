@@ -4,7 +4,7 @@ import { ContributorsList } from './components/ContributorsList';
 
 export const App = () => (
   <>
-    <h1>Reactjs Community GitHub Viewer</h1>
+    <h1><span>⚛︎</span>.js Community GitHub Viewer</h1>
     <Routes>
       <Route path="/" element={<ContributorsList />} />
     </Routes>
