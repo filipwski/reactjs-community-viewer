@@ -1,8 +1,7 @@
 import { compact } from 'lodash';
 import { useMemo } from 'react';
-import LoadingOverlay from 'react-loading-overlay-ts';
-import { PacmanLoader } from 'react-spinners';
 import { useMembersQuery } from "../../generated/graphql";
+import { LoadingOverlay } from '../LoadingOverlay';
 import { MembersTable } from './MembersTable';
 import './ContributorsList.styles.css'
 
@@ -80,9 +79,7 @@ export const ContributorsList = () => {
 
   return (
     <LoadingOverlay
-      active={loading}
-      spinner={<PacmanLoader />}
-      className="overlay"
+      loading={loading}
     >
       {members && (
         <div className="contributors-list-container">

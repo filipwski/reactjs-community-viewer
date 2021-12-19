@@ -1,0 +1,4 @@
+.overlay {
+  min-height: calc(100% - 70px - 60px);
+  height: calc(100% - 70px - 60px);
+}

@@ -12,11 +12,6 @@ body {
   height: 100vh;
 }
 
-.overlay {
-  min-height: calc(100% - 70px - 60px);
-  height: calc(100% - 70px - 60px);
-}
-
 header, footer {
   background-color: rgb(22, 21, 21);
   color: azure;
