@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import LoadingOverlay from 'react-loading-overlay-ts';
-import { BounceLoader } from 'react-spinners';
+import { PacmanLoader } from 'react-spinners';
 import { useMembersQuery } from "../../generated/graphql";
 import { Table } from '../Table';
 import './ContributorsList.styles.css'
@@ -70,7 +70,7 @@ export const ContributorsList = () => {
   return (
     <LoadingOverlay
       active={loading}
-      spinner={<BounceLoader />}
+      spinner={<PacmanLoader />}
       className="overlay"
     >
       {members && (
