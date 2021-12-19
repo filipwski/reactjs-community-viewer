@@ -26,7 +26,7 @@ export const Table = ({ columns, data }: Props) => {
                         ? ' ▼'
                         : ' ▲'
                       : ''}
-                  </span>
+                </span>
               </th>
             ))}
           </tr>
