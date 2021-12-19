@@ -8,7 +8,7 @@ type Props = {
   columns: Column<Data>[],
   data: Data[],
 };
-export const MemberTable = ({ columns, data }: Props) => {
+export const MembersTable = ({ columns, data }: Props) => {
   const {
     getTableProps, getTableBodyProps, headerGroups, rows, prepareRow,
   } = useTable({ columns, data }, useSortBy);
