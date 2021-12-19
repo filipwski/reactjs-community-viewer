@@ -3,7 +3,7 @@ import { useMemo } from 'react';
 import LoadingOverlay from 'react-loading-overlay-ts';
 import { PacmanLoader } from 'react-spinners';
 import { useMembersQuery } from "../../generated/graphql";
-import { Table } from '../Table';
+import { MemberTable } from './MemberTable';
 import './ContributorsList.styles.css'
 
 export const ContributorsList = () => {
@@ -76,7 +76,7 @@ export const ContributorsList = () => {
     >
       {members && (
         <div className="contributors-list-container">
-          <Table columns={columns} data={members} />
+          <MemberTable columns={columns} data={members} />
           <button
             onClick={() => onFetchMoreClick()}
           >

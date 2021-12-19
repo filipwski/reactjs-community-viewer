@@ -7,7 +7,7 @@ type Props = {
   columns: Column<Data>[],
   data: Data[],
 };
-export const Table = ({ columns, data }: Props) => {
+export const MemberTable = ({ columns, data }: Props) => {
   const {
     getTableProps, getTableBodyProps, headerGroups, rows, prepareRow,
   } = useTable({ columns, data }, useSortBy);
@@ -37,9 +37,15 @@ export const Table = ({ columns, data }: Props) => {
           prepareRow(row);
           return (
             <tr {...row.getRowProps()}>
-              {row.cells.map(cell => {
-                return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>;
-              })}
+              {row.cells.map(cell => (
+                typeof cell.value === 'string' && cell.value.startsWith('https://')
+                  ? <td {...cell.getCellProps()}>
+                      <a href={cell.value}>
+                        <img id="github-logo" src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"/>
+                      </a>
+                    </td>
+                  : <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
+              ))}
             </tr>
           );
         })}
