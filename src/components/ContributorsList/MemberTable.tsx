@@ -40,7 +40,7 @@ export const MemberTable = ({ columns, data }: Props) => {
               {row.cells.map(cell => (
                 typeof cell.value === 'string' && cell.value.startsWith('https://')
                   ? <td {...cell.getCellProps()}>
-                      <a href={cell.value}>
+                      <a href={cell.value} target="_blank">
                         <img id="github-logo" src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"/>
                       </a>
                     </td>
