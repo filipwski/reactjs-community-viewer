@@ -1,12 +1,16 @@
-body {
+html, body {
   margin: 0px;
-  min-height: 100%;
   background-color: rgb(114, 117, 124);
-  color: aqua;
+  max-height: 100vh;
 }
 
-body > #root > div {
+#root {
   height: 100vh;
+}
+
+.overlay {
+  min-height: calc(100% - 70px);
+  height: calc(100% - 70px);
 }
 
 h1 {
@@ -15,12 +19,9 @@ h1 {
   font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   margin: 0px;
   padding: 10px;
+  height: 50px;
 }
 
 h1 > span {
   font-size: larger;
-}
-
-.overlay {
-  min-height: 100%;
 }

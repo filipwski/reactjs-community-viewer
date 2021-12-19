@@ -23,8 +23,8 @@ export const Table = ({ columns, data }: Props) => {
                 <span>
                     {column.isSorted
                       ? column.isSortedDesc
-                        ? ' 🔽'
-                        : ' 🔼'
+                        ? ' ▼'
+                        : ' ▲'
                       : ''}
                   </span>
               </th>
