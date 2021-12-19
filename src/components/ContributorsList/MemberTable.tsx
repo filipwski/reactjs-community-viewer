@@ -45,8 +45,8 @@ export const MemberTable = ({ columns, data }: Props) => {
                     </td>
                   : cell.column.Header === 'Github Profile'
                     ? <td {...cell.getCellProps()}>
-                        <a href={cell.value} target="_blank">
-                          <img id="github-logo" src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"/>
+                        <a href={cell.value} target="_blank" rel="noreferrer">
+                          <img id="github-logo" alt="GitHub logo" src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"/>
                         </a>
                       </td>
                     : <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
