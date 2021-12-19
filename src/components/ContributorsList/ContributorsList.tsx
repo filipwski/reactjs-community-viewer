@@ -1,6 +1,7 @@
 import LoadingOverlay from 'react-loading-overlay-ts';
 import { BounceLoader } from 'react-spinners';
 import { useMembersQuery } from "../../generated/graphql";
+import './ContributorsList.styles.css'
 
 export const ContributorsList = () => {
   const { error, data, fetchMore, loading } = useMembersQuery({ notifyOnNetworkStatusChange: true });
@@ -36,14 +37,16 @@ export const ContributorsList = () => {
       spinner={<BounceLoader />}
       className="overlay"
     >
-      {members?.map(
-        (element) => <p key={element?.id} >{element?.name}</p>
-      )}
-      <button
-        onClick={() => onFetchMoreClick()}
-      >
-        Fetch more
-      </button>
+      <div className="contributors-list-container">
+        {members?.map(
+          (element) => <p key={element?.id} >{element?.name}</p>
+        )}
+        <button
+          onClick={() => onFetchMoreClick()}
+        >
+          Fetch more
+        </button>
+      </div>
     </LoadingOverlay>
   );
 };

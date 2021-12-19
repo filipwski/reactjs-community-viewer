@@ -1,0 +1,6 @@
+.contributors-list-container {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  overflow-y: scroll;
+}

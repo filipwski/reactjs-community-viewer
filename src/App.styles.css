@@ -7,6 +7,14 @@ body > #root > div {
   height: 100vh;
 }
 
+h1 {
+  background-color: black;
+  color: azure;
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0px;
+  padding: 10px;
+}
+
 .overlay {
   min-height: 100%;
 }
