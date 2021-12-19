@@ -79,6 +79,7 @@ export const ContributorsList = () => {
           <MemberTable columns={columns} data={members} />
           <button
             onClick={() => onFetchMoreClick()}
+            className="fetch-more-button"
           >
             Fetch more
           </button>
