@@ -6,6 +6,15 @@ import { useMembersQuery } from "../../generated/graphql";
 import { MembersTable } from './MembersTable';
 import './ContributorsList.styles.css'
 
+export enum ColumnNames {
+  Contributions = 'Contributions',
+  Followers = 'Followers',
+  Gists = 'Gists',
+  GitHubProfile = 'GitHub Profile',
+  Name = 'Name',
+  Repositories = 'Repositories',
+}
+
 export const ContributorsList = () => {
   const { error, data, fetchMore, loading } = useMembersQuery({ notifyOnNetworkStatusChange: true });
 
@@ -14,28 +23,28 @@ export const ContributorsList = () => {
       Header: "Ranking of community contributors",
       columns: [
         {
-          Header: "Name",
+          Header: ColumnNames.Name,
           accessor: "name",
           disableSortBy: true,
         },
         {
-          Header: "Contributions",
+          Header: ColumnNames.Contributions,
           accessor: "contributionsCollection.contributionCalendar.totalContributions",
         },
         {
-          Header: "Repositories",
+          Header: ColumnNames.Repositories,
           accessor: "repositories.totalCount",
         },
         {
-          Header: "Gists",
+          Header: ColumnNames.Gists,
           accessor: "gists.totalCount",
         },
         {
-          Header: "Followers",
+          Header: ColumnNames.Followers,
           accessor: "followers.totalCount",
         },
         {
-          Header: "Github Profile",
+          Header: ColumnNames.GitHubProfile,
           accessor: "url",
           disableSortBy: true
         },
