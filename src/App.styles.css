@@ -4,6 +4,10 @@ html, body {
   max-height: 100vh;
 }
 
+body {
+  font-family: 'Saira Condensed', sans-serif;
+}
+
 #root {
   height: 100vh;
 }
@@ -16,7 +20,6 @@ html, body {
 h1 {
   background-color: rgb(22, 21, 21);
   color: azure;
-  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   margin: 0px;
   padding: 10px;
   height: 50px;
