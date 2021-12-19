@@ -1,10 +1,46 @@
+import { useMemo } from 'react';
 import LoadingOverlay from 'react-loading-overlay-ts';
 import { BounceLoader } from 'react-spinners';
 import { useMembersQuery } from "../../generated/graphql";
+import { Table } from '../Table';
 import './ContributorsList.styles.css'
 
 export const ContributorsList = () => {
   const { error, data, fetchMore, loading } = useMembersQuery({ notifyOnNetworkStatusChange: true });
+
+  const columns = useMemo(() => [
+    {
+      Header: "Ranking of community contributors",
+      columns: [
+        {
+          Header: "Name",
+          accessor: "name",
+          disableSortBy: true,
+        },
+        {
+          Header: "Contributions",
+          accessor: "contributionsCollection.contributionCalendar.totalContributions",
+        },
+        {
+          Header: "Repositories",
+          accessor: "repositories.totalCount",
+        },
+        {
+          Header: "Gists",
+          accessor: "gists.totalCount",
+        },
+        {
+          Header: "Followers",
+          accessor: "followers.totalCount",
+        },
+        {
+          Header: "Github Profile",
+          accessor: "url",
+          disableSortBy: true
+        },
+      ],
+    }
+  ], []);
 
   if (error) return <p>{error}</p>;
 
@@ -37,16 +73,16 @@ export const ContributorsList = () => {
       spinner={<BounceLoader />}
       className="overlay"
     >
-      <div className="contributors-list-container">
-        {members?.map(
-          (element) => <p key={element?.id} >{element?.name}</p>
-        )}
-        <button
-          onClick={() => onFetchMoreClick()}
-        >
-          Fetch more
-        </button>
-      </div>
+      {members && (
+        <div className="contributors-list-container">
+          <Table columns={columns} data={members} />
+          <button
+            onClick={() => onFetchMoreClick()}
+          >
+            Fetch more
+          </button>
+        </div>
+      )}
     </LoadingOverlay>
   );
 };

@@ -1,6 +1,8 @@
 body {
   margin: 0px;
   min-height: 100%;
+  background-color: rgb(40, 42, 48);
+  color: aqua;
 }
 
 body > #root > div {
@@ -8,7 +10,7 @@ body > #root > div {
 }
 
 h1 {
-  background-color: black;
+  background-color: rgb(22, 21, 21);
   color: azure;
   font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   margin: 0px;
