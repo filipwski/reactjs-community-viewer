@@ -1,4 +1,5 @@
 import { Dictionary } from "lodash";
+import { Link } from "react-router-dom";
 import { Column, useTable, useSortBy } from "react-table";
 
 type Data = Dictionary<string | number | Data | undefined | null>;
@@ -38,13 +39,17 @@ export const MemberTable = ({ columns, data }: Props) => {
           return (
             <tr {...row.getRowProps()}>
               {row.cells.map(cell => (
-                typeof cell.value === 'string' && cell.value.startsWith('https://')
+                  cell.column.Header === 'Name'
                   ? <td {...cell.getCellProps()}>
-                      <a href={cell.value} target="_blank">
-                        <img id="github-logo" src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"/>
-                      </a>
+                      <Link to={`contributor/${cell.row.original.id}`}>{cell.render('Cell')}</Link>
                     </td>
-                  : <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
+                  : cell.column.Header === 'Github Profile'
+                    ? <td {...cell.getCellProps()}>
+                        <a href={cell.value} target="_blank">
+                          <img id="github-logo" src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"/>
+                        </a>
+                      </td>
+                    : <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
               ))}
             </tr>
           );

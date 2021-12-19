@@ -79,3 +79,7 @@ thead > tr:nth-child(2) > th:first-child {
 thead > tr:nth-child(2) > th:last-child {
   border-bottom-right-radius: 20px;
 }
+
+tbody td:hover {
+  background-color: rgb(142, 187, 75);
+}
