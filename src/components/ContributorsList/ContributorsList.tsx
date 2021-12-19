@@ -2,7 +2,7 @@ import LoadingOverlay from 'react-loading-overlay-ts';
 import { BounceLoader } from 'react-spinners';
 import { useMembersQuery } from "../../generated/graphql";
 
-export const ContributorsListView = () => {
+export const ContributorsList = () => {
   const { error, data, fetchMore, loading } = useMembersQuery({ notifyOnNetworkStatusChange: true });
 
   if (error) return <p>{error}</p>;
@@ -34,6 +34,7 @@ export const ContributorsListView = () => {
     <LoadingOverlay
       active={loading}
       spinner={<BounceLoader />}
+      className="overlay"
     >
       {members?.map(
         (element) => <p key={element?.id} >{element?.name}</p>
