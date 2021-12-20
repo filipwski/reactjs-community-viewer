@@ -1,9 +1,9 @@
-import { compact } from 'lodash';
-import { useMemo } from 'react';
-import { useMembersQuery } from "../../generated/graphql";
+import './ContributorsList.styles.css';
 import { LoadingOverlay } from '../LoadingOverlay';
 import { MembersTable } from './MembersTable';
-import './ContributorsList.styles.css'
+import { compact } from 'lodash';
+import { useMembersQuery } from '../../generated/graphql';
+import { useMemo } from 'react';
 
 export enum ColumnNames {
   Contributions = 'Contributions',
@@ -19,32 +19,32 @@ export const ContributorsList = () => {
 
   const columns = useMemo(() => [
     {
-      Header: "Ranking of community contributors",
+      Header: 'Ranking of community contributors',
       columns: [
         {
           Header: ColumnNames.Name,
-          accessor: "name",
+          accessor: 'name',
           disableSortBy: true,
         },
         {
           Header: ColumnNames.Contributions,
-          accessor: "contributionsCollection.contributionCalendar.totalContributions",
+          accessor: 'contributionsCollection.contributionCalendar.totalContributions',
         },
         {
           Header: ColumnNames.Repositories,
-          accessor: "repositories.totalCount",
+          accessor: 'repositories.totalCount',
         },
         {
           Header: ColumnNames.Gists,
-          accessor: "gists.totalCount",
+          accessor: 'gists.totalCount',
         },
         {
           Header: ColumnNames.Followers,
-          accessor: "followers.totalCount",
+          accessor: 'followers.totalCount',
         },
         {
           Header: ColumnNames.GitHubProfile,
-          accessor: "url",
+          accessor: 'url',
           disableSortBy: true
         },
       ],

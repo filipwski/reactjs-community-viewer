@@ -1,7 +1,7 @@
-import { Dictionary } from "lodash";
-import { Link } from "react-router-dom";
-import { Column, useTable, useSortBy } from "react-table";
-import { ColumnNames } from "./ContributorsList";
+import { Column, useSortBy, useTable } from 'react-table';
+import { ColumnNames } from './ContributorsList';
+import { Dictionary } from 'lodash';
+import { Link } from 'react-router-dom';
 
 type Data = Dictionary<string | number | Data | undefined | null>;
 
@@ -14,6 +14,7 @@ export const MembersTable = ({ columns, data }: Props) => {
     getTableProps, getTableBodyProps, headerGroups, rows, prepareRow,
   } = useTable({ columns, data }, useSortBy);
 
+  /* eslint-disable react/jsx-key */
   return (
     <table {...getTableProps()}>
       <thead>
@@ -23,11 +24,11 @@ export const MembersTable = ({ columns, data }: Props) => {
               <th {...column.getHeaderProps(column.getSortByToggleProps())}>
                 {column.render('Header')}
                 <span>
-                    {column.isSorted
-                      ? column.isSortedDesc
-                        ? ' ▼'
-                        : ' ▲'
-                      : ''}
+                  {column.isSorted
+                    ? column.isSortedDesc
+                      ? ' ▼'
+                      : ' ▲'
+                    : ''}
                 </span>
               </th>
             ))}
@@ -35,21 +36,21 @@ export const MembersTable = ({ columns, data }: Props) => {
         ))}
       </thead>
       <tbody {...getTableBodyProps()}>
-        {rows.map((row, i) => {
+        {rows.map((row) => {
           prepareRow(row);
           return (
             <tr {...row.getRowProps()}>
               {row.cells.map(cell => (
-                  cell.column.Header === ColumnNames.Name
+                cell.column.Header === ColumnNames.Name
                   ? <td {...cell.getCellProps()}>
-                      <Link to={`contributor/${cell.row.original.id}`}>{cell.render('Cell')}</Link>
-                    </td>
+                    <Link to={`contributor/${cell.row.original.id}`}>{cell.render('Cell')}</Link>
+                  </td>
                   : cell.column.Header === ColumnNames.GitHubProfile
                     ? <td {...cell.getCellProps()}>
-                        <a href={cell.value} target="_blank" rel="noreferrer">
-                          <img id="github-logo" alt="GitHub logo" src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"/>
-                        </a>
-                      </td>
+                      <a href={cell.value} target="_blank" rel="noreferrer">
+                        <img id="github-logo" alt="GitHub logo" src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"/>
+                      </a>
+                    </td>
                     : <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
               ))}
             </tr>
