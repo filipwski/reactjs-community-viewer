@@ -13,7 +13,7 @@ export const App = () => (
       <Route path="contributor/:id" element={<ContributorDetails />} />
     </Routes>
     <footer>
-      <span>© Filip Skibiński 2021</span>
+      <small>© Filip Skibiński 2021</small>
     </footer>
   </>
 );
