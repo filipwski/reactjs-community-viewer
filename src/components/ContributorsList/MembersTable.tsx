@@ -1,6 +1,7 @@
 import { Column, useSortBy, useTable } from 'react-table';
 import { ColumnNames } from './ContributorsList';
 import { Dictionary } from 'lodash';
+import { GitHubLinkIcon } from '../GitHubLinkIcon';
 import { Link } from 'react-router-dom';
 
 type Data = Dictionary<string | number | Data | undefined | null>;
@@ -43,13 +44,14 @@ export const MembersTable = ({ columns, data }: Props) => {
               {row.cells.map(cell => (
                 cell.column.Header === ColumnNames.Name
                   ? <td {...cell.getCellProps()}>
-                    <Link to={`contributor/${cell.row.original.id}`}>{cell.render('Cell')}</Link>
+                    <Link to={`contributor/${cell.row.original.login}`}>{cell.render('Cell')}</Link>
                   </td>
                   : cell.column.Header === ColumnNames.GitHubProfile
                     ? <td {...cell.getCellProps()}>
-                      <a href={cell.value} target="_blank" rel="noreferrer">
-                        <img id="github-logo" alt="GitHub logo" src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"/>
-                      </a>
+                      <GitHubLinkIcon
+                        className="table-github-icon"
+                        href={cell.value}
+                      />
                     </td>
                     : <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
               ))}

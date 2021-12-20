@@ -1,6 +1,7 @@
 import './ContributorsList.styles.css';
 import { LoadingOverlay } from '../LoadingOverlay';
 import { MembersTable } from './MembersTable';
+import { ViewContainer } from '../ViewContainer';
 import { compact } from 'lodash';
 import { useMembersQuery } from '../../generated/graphql';
 import { useMemo } from 'react';
@@ -51,7 +52,7 @@ export const ContributorsList = () => {
     }
   ], []);
 
-  if (error) return <p>{error}</p>;
+  if (error) return <ViewContainer><p>{error.message}</p></ViewContainer>;
 
   const members = compact(data?.organization?.membersWithRole?.nodes);
   const cursor = data?.organization?.membersWithRole?.pageInfo.endCursor;
@@ -82,7 +83,7 @@ export const ContributorsList = () => {
       loading={loading}
     >
       {members && (
-        <div className="contributors-list-container">
+        <ViewContainer>
           <MembersTable columns={columns} data={members} />
           <button
             onClick={onFetchMoreClick}
@@ -91,7 +92,7 @@ export const ContributorsList = () => {
           >
             Fetch more
           </button>
-        </div>
+        </ViewContainer>
       )}
     </LoadingOverlay>
   );

@@ -1,27 +1,27 @@
 query members($cursor: String) {
   organization(login: "reactjs") {
     membersWithRole(first: 10, after: $cursor) {
-      pageInfo {
-        endCursor
-      }
       nodes {
-        id
-        name
-        url
-        repositories(privacy: PUBLIC) {
-          totalCount
-        }
-        gists(privacy: PUBLIC) {
-          totalCount
-        }
-        followers {
-          totalCount
-        }
         contributionsCollection {
           contributionCalendar {
             totalContributions
           }
         }
+        followers {
+          totalCount
+        }
+        gists(privacy: PUBLIC) {
+          totalCount
+        }
+        login
+        name
+        repositories(privacy: PUBLIC) {
+          totalCount
+        }
+        url
+      }
+      pageInfo {
+        endCursor
       }
     }
   }

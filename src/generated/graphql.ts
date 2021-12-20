@@ -21971,39 +21971,109 @@ export type WorkflowRunPendingDeploymentRequestsArgs = {
   last?: InputMaybe<Scalars['Int']>;
 };
 
+export type MemberWithContributionsQueryVariables = Exact<{
+  login: Scalars['String'];
+  cursor?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type MemberWithContributionsQuery = { __typename?: 'Query', user?: { __typename?: 'User', avatarUrl: any, bio?: string | null | undefined, company?: string | null | undefined, name?: string | null | undefined, url: any, contributionsCollection: { __typename?: 'ContributionsCollection', contributionCalendar: { __typename?: 'ContributionCalendar', totalContributions: number } }, followers: { __typename?: 'FollowerConnection', totalCount: number }, gists: { __typename?: 'GistConnection', totalCount: number }, repositories: { __typename?: 'RepositoryConnection', totalCount: number }, repositoriesContributedTo: { __typename?: 'RepositoryConnection', totalCount: number, nodes?: Array<{ __typename?: 'Repository', description?: string | null | undefined, name: string, url: any } | null | undefined> | null | undefined } } | null | undefined };
+
 export type MembersQueryVariables = Exact<{
   cursor?: InputMaybe<Scalars['String']>;
 }>;
 
 
-export type MembersQuery = { __typename?: 'Query', organization?: { __typename?: 'Organization', membersWithRole: { __typename?: 'OrganizationMemberConnection', pageInfo: { __typename?: 'PageInfo', endCursor?: string | null | undefined }, nodes?: Array<{ __typename?: 'User', id: string, name?: string | null | undefined, url: any, repositories: { __typename?: 'RepositoryConnection', totalCount: number }, gists: { __typename?: 'GistConnection', totalCount: number }, followers: { __typename?: 'FollowerConnection', totalCount: number }, contributionsCollection: { __typename?: 'ContributionsCollection', contributionCalendar: { __typename?: 'ContributionCalendar', totalContributions: number } } } | null | undefined> | null | undefined } } | null | undefined };
+export type MembersQuery = { __typename?: 'Query', organization?: { __typename?: 'Organization', membersWithRole: { __typename?: 'OrganizationMemberConnection', nodes?: Array<{ __typename?: 'User', login: string, name?: string | null | undefined, url: any, contributionsCollection: { __typename?: 'ContributionsCollection', contributionCalendar: { __typename?: 'ContributionCalendar', totalContributions: number } }, followers: { __typename?: 'FollowerConnection', totalCount: number }, gists: { __typename?: 'GistConnection', totalCount: number }, repositories: { __typename?: 'RepositoryConnection', totalCount: number } } | null | undefined> | null | undefined, pageInfo: { __typename?: 'PageInfo', endCursor?: string | null | undefined } } } | null | undefined };
 
 
+export const MemberWithContributionsDocument = gql`
+    query memberWithContributions($login: String!, $cursor: String) {
+  user(login: $login) {
+    avatarUrl
+    bio
+    company
+    contributionsCollection {
+      contributionCalendar {
+        totalContributions
+      }
+    }
+    followers {
+      totalCount
+    }
+    gists(privacy: PUBLIC) {
+      totalCount
+    }
+    name
+    repositories(privacy: PUBLIC) {
+      totalCount
+    }
+    repositoriesContributedTo(first: 10, after: $cursor) {
+      totalCount
+      nodes {
+        description
+        name
+        url
+      }
+    }
+    url
+  }
+}
+    `;
+
+/**
+ * __useMemberWithContributionsQuery__
+ *
+ * To run a query within a React component, call `useMemberWithContributionsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useMemberWithContributionsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useMemberWithContributionsQuery({
+ *   variables: {
+ *      login: // value for 'login'
+ *      cursor: // value for 'cursor'
+ *   },
+ * });
+ */
+export function useMemberWithContributionsQuery(baseOptions: Apollo.QueryHookOptions<MemberWithContributionsQuery, MemberWithContributionsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<MemberWithContributionsQuery, MemberWithContributionsQueryVariables>(MemberWithContributionsDocument, options);
+      }
+export function useMemberWithContributionsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<MemberWithContributionsQuery, MemberWithContributionsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<MemberWithContributionsQuery, MemberWithContributionsQueryVariables>(MemberWithContributionsDocument, options);
+        }
+export type MemberWithContributionsQueryHookResult = ReturnType<typeof useMemberWithContributionsQuery>;
+export type MemberWithContributionsLazyQueryHookResult = ReturnType<typeof useMemberWithContributionsLazyQuery>;
+export type MemberWithContributionsQueryResult = Apollo.QueryResult<MemberWithContributionsQuery, MemberWithContributionsQueryVariables>;
 export const MembersDocument = gql`
     query members($cursor: String) {
   organization(login: "reactjs") {
     membersWithRole(first: 10, after: $cursor) {
-      pageInfo {
-        endCursor
-      }
       nodes {
-        id
-        name
-        url
-        repositories(privacy: PUBLIC) {
-          totalCount
-        }
-        gists(privacy: PUBLIC) {
-          totalCount
-        }
-        followers {
-          totalCount
-        }
         contributionsCollection {
           contributionCalendar {
             totalContributions
           }
         }
+        followers {
+          totalCount
+        }
+        gists(privacy: PUBLIC) {
+          totalCount
+        }
+        login
+        name
+        repositories(privacy: PUBLIC) {
+          totalCount
+        }
+        url
+      }
+      pageInfo {
+        endCursor
       }
     }
   }

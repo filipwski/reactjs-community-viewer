@@ -38,6 +38,7 @@
             "error",
             "always"
         ],
-        "sort-imports": "error"
+        "sort-imports": "error",
+        "@typescript-eslint/explicit-module-boundary-types": "off"
     }
 }

@@ -1,0 +1,54 @@
+.details-container {
+  display: flex;
+  margin-top: 20px;
+  word-wrap: break-word;
+}
+
+.user-avatar {
+  border-radius: 50%;
+  border-style: outset;
+}
+
+@media screen and (max-width:600px) {
+  .details-container-modifier {
+    align-items: center;
+    flex-direction: column;
+    max-width: 80vw;
+  }
+
+  .user-avatar-modifier {
+    width: 40vw;
+  }
+}
+
+@media screen and (min-width:601px) {
+  .details-container-modifier {
+    flex-direction: row;
+    justify-content: center;
+  }
+
+  .user-avatar-modifier {
+    width: 25vw;
+  }
+}
+
+.user-details {
+  align-items: center;
+  color: azure;
+  display: flex;
+  flex-direction: column;
+  margin: 10px;
+}
+
+.user-details > * {
+  margin: 7px;
+}
+
+.user-name {
+  font-size: x-large;
+}
+
+.github-profile-icon {
+  border-radius: 50%;
+  width: 40px;
+}
