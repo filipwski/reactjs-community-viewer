@@ -1,92 +1,77 @@
 import './ContributorDetails.styles.css';
-import { useMemberRepositoriesQuery, useSingleMemberQuery } from 'generated/graphql';
+import { compact, set } from 'lodash';
 import { ErrorMessage } from 'components/ErrorMessage';
+import { FetchMoreButton } from 'components/FetchMoreButton';
 import { GitHubLinkIcon } from 'components/GitHubLinkIcon';
 import { LoadingOverlay } from 'components/LoadingOverlay';
 import { RepositoriesTable } from './RepositoriesTable';
 import { ViewContainer } from 'components/ViewContainer';
-import { compact } from 'lodash';
+import { useGetMemberWithRepositoriesQuery } from 'generated/graphql';
 import { useParams } from 'react-router-dom';
-// import { FetchMoreButton } from 'components/FetchMoreButton';
 
 export const ContributorDetails = () => {
   const { id } = useParams();
-  const {
-    error: singleMemberError,
-    data: singleMemberData,
-    loading: singleMemberLoading,
-  } = useSingleMemberQuery({
-    variables: { login: id ?? '' },
+  const { error, data, loading, fetchMore } = useGetMemberWithRepositoriesQuery({
+    variables: { login: id ?? '' }
   });
 
-  const {
-    error: repositoriesError,
-    data: repositoriesData,
-    loading: repositoriesLoading,
-  } = useMemberRepositoriesQuery({
-    notifyOnNetworkStatusChange: true,
-    variables: { login: id ?? '' },
-    fetchPolicy: 'no-cache'
+  if (error) return <ErrorMessage message={error.message} />;
+
+  const memberData = data?.user;
+  const repositoriesData = compact(data?.user?.repositoriesContributedTo.nodes);
+  const cursor = data?.user?.repositoriesContributedTo.pageInfo.endCursor;
+
+  const allReposDownloaded = !cursor;
+
+  const onFetchMoreClick = () => fetchMore({
+    variables: { cursor },
+    updateQuery: (previousResults, { fetchMoreResult }) => {
+      const oldReposValue = previousResults.user?.repositoriesContributedTo?.nodes;
+      const newReposValue = fetchMoreResult?.user?.repositoriesContributedTo?.nodes;
+      
+      if (!oldReposValue || !newReposValue) return previousResults;
+
+      return set(
+        { ...previousResults, ...fetchMoreResult },
+        'user.repositoriesContributedTo.nodes',
+        [...oldReposValue, ...newReposValue],
+      );
+    },
   });
-
-  if (singleMemberError || repositoriesError)
-    return <ErrorMessage message={(singleMemberError ?? repositoriesError!).message} />;
-
-  const userData = singleMemberData?.user;
-  const reposData = compact(repositoriesData?.user?.repositoriesContributedTo?.nodes);
-
-  // const onFetchMoreClick = () => fetchMore({
-  //   variables: { cursor },
-  //   updateQuery: (previousResults, { fetchMoreResult }) => {
-  //     const oldMemberValues = previousResults.organization?.membersWithRole.nodes;
-  //     const newMemberValues = fetchMoreResult?.organization?.membersWithRole.nodes;
-  //     if (!newMemberValues || !oldMemberValues) return previousResults;
-
-  //     return {
-  //       organization: {
-  //         membersWithRole: {
-  //           pageInfo: {
-  //             endCursor: fetchMoreResult?.organization?.membersWithRole.pageInfo?.endCursor,
-  //           },
-  //           nodes: [...oldMemberValues, ...newMemberValues],
-  //         }
-  //       }
-  //     };
-  //   },
-  // });
 
   return (
     <LoadingOverlay
-      loading={singleMemberLoading || repositoriesLoading}
+      loading={loading}
     >
-      {userData && (
+      {memberData && (
         <ViewContainer>
           <div className="details-container details-container-modifier">
             <img
               alt="User avatar"
               className="user-avatar user-avatar-modifier"
-              src={userData.avatarUrl}
+              src={memberData.avatarUrl}
             />
             <div className="user-details">
-              <p className="user-name">{userData.name}</p>
-              <p>{userData.bio}</p>
-              {userData.company && <p>Works at <b>{userData.company}</b></p>}
+              <p className="user-name">{memberData.name}</p>
+              <p>{memberData.bio}</p>
+              {memberData.company && <p>Works at <b>{memberData.company}</b></p>}
               <p><b>Contributions:</b> {
-                userData.contributionsCollection.contributionCalendar.totalContributions
+                memberData.contributionsCollection.contributionCalendar.totalContributions
               }</p>
-              <p><b>Repositories:</b> {userData.repositories.totalCount}</p>
-              <p><b>Gists:</b> {userData.gists.totalCount}</p>
-              <p><b>Followers:</b> {userData.followers.totalCount}</p>
+              <p><b>Repositories:</b> {memberData.repositories.totalCount}</p>
+              <p><b>Gists:</b> {memberData.gists.totalCount}</p>
+              <p><b>Followers:</b> {memberData.followers.totalCount}</p>
               <GitHubLinkIcon
                 className="github-profile-icon"
-                href={userData.url}
+                href={memberData.url}
               />
             </div>
           </div>
-          {reposData && (
-            // <RepositoriesTable data={reposData} />
-            // <FetchMoreButton onClick={} />
-            <></>
+          {repositoriesData && (
+            <>
+              <RepositoriesTable data={repositoriesData} />
+              <FetchMoreButton disabled={allReposDownloaded} onClick={onFetchMoreClick} />
+            </>
           )}
         </ViewContainer>
       )}

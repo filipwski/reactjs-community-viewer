@@ -1,4 +1,4 @@
-query members($cursor: String) {
+query getMembers($cursor: String) {
   organization(login: "reactjs") {
     membersWithRole(first: 10, after: $cursor) {
       nodes {

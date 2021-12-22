@@ -5,10 +5,10 @@ import { LoadingOverlay } from 'components/LoadingOverlay';
 import { MembersTable } from './MembersTable';
 import { ViewContainer } from 'components/ViewContainer';
 import { compact } from 'lodash';
-import { useMembersQuery } from 'generated/graphql';
+import { useGetMembersQuery } from 'generated/graphql';
 
 export const ContributorsList = () => {
-  const { error, data, fetchMore, loading } = useMembersQuery({ notifyOnNetworkStatusChange: true });
+  const { error, data, fetchMore, loading } = useGetMembersQuery({ notifyOnNetworkStatusChange: true });
 
   if (error) return <ErrorMessage message={error.message} />;
 
@@ -19,9 +19,9 @@ export const ContributorsList = () => {
   const onFetchMoreClick = () => fetchMore({
     variables: { cursor },
     updateQuery: (previousResults, { fetchMoreResult }) => {
-      const oldMemberValues = previousResults.organization?.membersWithRole.nodes;
-      const newMemberValues = fetchMoreResult?.organization?.membersWithRole.nodes;
-      if (!newMemberValues || !oldMemberValues) return previousResults;
+      const oldMembersValue = previousResults.organization?.membersWithRole.nodes;
+      const newMembersValue = fetchMoreResult?.organization?.membersWithRole.nodes;
+      if (!newMembersValue || !oldMembersValue) return previousResults;
 
       return {
         organization: {
@@ -29,7 +29,7 @@ export const ContributorsList = () => {
             pageInfo: {
               endCursor: fetchMoreResult?.organization?.membersWithRole.pageInfo?.endCursor,
             },
-            nodes: [...oldMemberValues, ...newMemberValues],
+            nodes: [...oldMembersValue, ...newMembersValue],
           }
         }
       };
