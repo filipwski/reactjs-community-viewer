@@ -1,4 +1,5 @@
 import './ContributorDetails.styles.css';
+import { ErrorMessage } from '@components/ErrorMessage';
 import { GitHubLinkIcon } from '@components/GitHubLinkIcon';
 import { LoadingOverlay } from '@components/LoadingOverlay';
 import { ViewContainer } from '@components/ViewContainer';
@@ -12,7 +13,7 @@ export const ContributorDetails = () => {
     variables: { login: id ?? '' },
   });
 
-  if (error) return <ViewContainer><p>{error.message}</p></ViewContainer>;
+  if (error) return <ErrorMessage message={error.message} />;
 
   const userData = data?.user;
 

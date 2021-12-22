@@ -1,10 +1,10 @@
 import './ContributorsList.styles.css';
+import { ErrorMessage } from '@components/ErrorMessage';
 import { LoadingOverlay } from '@components/LoadingOverlay';
 import { MembersTable } from './MembersTable';
 import { ViewContainer } from '@components/ViewContainer';
 import { compact } from 'lodash';
 import { useMembersQuery } from '@queries';
-import { useMemo } from 'react';
 
 export enum ColumnNames {
   Contributions = 'Contributions',
@@ -15,44 +15,42 @@ export enum ColumnNames {
   Repositories = 'Repositories',
 }
 
+const columns = [{
+  Header: 'Ranking of community contributors',
+  columns: [
+    {
+      Header: ColumnNames.Name,
+      accessor: 'name',
+      disableSortBy: true,
+    },
+    {
+      Header: ColumnNames.Contributions,
+      accessor: 'contributionsCollection.contributionCalendar.totalContributions',
+    },
+    {
+      Header: ColumnNames.Repositories,
+      accessor: 'repositories.totalCount',
+    },
+    {
+      Header: ColumnNames.Gists,
+      accessor: 'gists.totalCount',
+    },
+    {
+      Header: ColumnNames.Followers,
+      accessor: 'followers.totalCount',
+    },
+    {
+      Header: ColumnNames.GitHubProfile,
+      accessor: 'url',
+      disableSortBy: true
+    },
+  ],
+}];
+
 export const ContributorsList = () => {
   const { error, data, fetchMore, loading } = useMembersQuery({ notifyOnNetworkStatusChange: true });
 
-  const columns = useMemo(() => [
-    {
-      Header: 'Ranking of community contributors',
-      columns: [
-        {
-          Header: ColumnNames.Name,
-          accessor: 'name',
-          disableSortBy: true,
-        },
-        {
-          Header: ColumnNames.Contributions,
-          accessor: 'contributionsCollection.contributionCalendar.totalContributions',
-        },
-        {
-          Header: ColumnNames.Repositories,
-          accessor: 'repositories.totalCount',
-        },
-        {
-          Header: ColumnNames.Gists,
-          accessor: 'gists.totalCount',
-        },
-        {
-          Header: ColumnNames.Followers,
-          accessor: 'followers.totalCount',
-        },
-        {
-          Header: ColumnNames.GitHubProfile,
-          accessor: 'url',
-          disableSortBy: true
-        },
-      ],
-    }
-  ], []);
-
-  if (error) return <ViewContainer><p>{error.message}</p></ViewContainer>;
+  if (error) return <ErrorMessage message={error.message} />;
 
   const members = compact(data?.organization?.membersWithRole?.nodes);
   const cursor = data?.organization?.membersWithRole?.pageInfo.endCursor;
