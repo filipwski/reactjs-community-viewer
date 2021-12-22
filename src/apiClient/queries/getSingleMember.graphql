@@ -1,4 +1,4 @@
-query singleMember($login: String!, $cursor: String) {
+query singleMember($login: String!) {
   user(login: $login) {
     avatarUrl
     bio

@@ -1,0 +1,7 @@
+query memberRepositories($login: String!, $cursor: String) {
+  user(login: $login) {
+    repositories(privacy: PUBLIC) {
+      totalCount
+    }
+  }
+}

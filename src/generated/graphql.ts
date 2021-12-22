@@ -21971,6 +21971,14 @@ export type WorkflowRunPendingDeploymentRequestsArgs = {
   last?: InputMaybe<Scalars['Int']>;
 };
 
+export type MemberRepositoriesQueryVariables = Exact<{
+  login: Scalars['String'];
+  cursor?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type MemberRepositoriesQuery = { __typename?: 'Query', user?: { __typename?: 'User', repositories: { __typename?: 'RepositoryConnection', totalCount: number } } | null | undefined };
+
 export type MembersQueryVariables = Exact<{
   cursor?: InputMaybe<Scalars['String']>;
 }>;
@@ -21980,13 +21988,50 @@ export type MembersQuery = { __typename?: 'Query', organization?: { __typename?:
 
 export type SingleMemberQueryVariables = Exact<{
   login: Scalars['String'];
-  cursor?: InputMaybe<Scalars['String']>;
 }>;
 
 
 export type SingleMemberQuery = { __typename?: 'Query', user?: { __typename?: 'User', avatarUrl: any, bio?: string | null | undefined, company?: string | null | undefined, name?: string | null | undefined, url: any, contributionsCollection: { __typename?: 'ContributionsCollection', contributionCalendar: { __typename?: 'ContributionCalendar', totalContributions: number } }, followers: { __typename?: 'FollowerConnection', totalCount: number }, gists: { __typename?: 'GistConnection', totalCount: number }, repositories: { __typename?: 'RepositoryConnection', totalCount: number } } | null | undefined };
 
 
+export const MemberRepositoriesDocument = gql`
+    query memberRepositories($login: String!, $cursor: String) {
+  user(login: $login) {
+    repositories(privacy: PUBLIC) {
+      totalCount
+    }
+  }
+}
+    `;
+
+/**
+ * __useMemberRepositoriesQuery__
+ *
+ * To run a query within a React component, call `useMemberRepositoriesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useMemberRepositoriesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useMemberRepositoriesQuery({
+ *   variables: {
+ *      login: // value for 'login'
+ *      cursor: // value for 'cursor'
+ *   },
+ * });
+ */
+export function useMemberRepositoriesQuery(baseOptions: Apollo.QueryHookOptions<MemberRepositoriesQuery, MemberRepositoriesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<MemberRepositoriesQuery, MemberRepositoriesQueryVariables>(MemberRepositoriesDocument, options);
+      }
+export function useMemberRepositoriesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<MemberRepositoriesQuery, MemberRepositoriesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<MemberRepositoriesQuery, MemberRepositoriesQueryVariables>(MemberRepositoriesDocument, options);
+        }
+export type MemberRepositoriesQueryHookResult = ReturnType<typeof useMemberRepositoriesQuery>;
+export type MemberRepositoriesLazyQueryHookResult = ReturnType<typeof useMemberRepositoriesLazyQuery>;
+export type MemberRepositoriesQueryResult = Apollo.QueryResult<MemberRepositoriesQuery, MemberRepositoriesQueryVariables>;
 export const MembersDocument = gql`
     query members($cursor: String) {
   organization(login: "reactjs") {
@@ -22046,7 +22091,7 @@ export type MembersQueryHookResult = ReturnType<typeof useMembersQuery>;
 export type MembersLazyQueryHookResult = ReturnType<typeof useMembersLazyQuery>;
 export type MembersQueryResult = Apollo.QueryResult<MembersQuery, MembersQueryVariables>;
 export const SingleMemberDocument = gql`
-    query singleMember($login: String!, $cursor: String) {
+    query singleMember($login: String!) {
   user(login: $login) {
     avatarUrl
     bio
@@ -22084,7 +22129,6 @@ export const SingleMemberDocument = gql`
  * const { data, loading, error } = useSingleMemberQuery({
  *   variables: {
  *      login: // value for 'login'
- *      cursor: // value for 'cursor'
  *   },
  * });
  */
