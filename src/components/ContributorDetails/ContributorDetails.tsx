@@ -1,25 +1,40 @@
 import './ContributorDetails.styles.css';
-import { ErrorMessage } from '@components/ErrorMessage';
-import { GitHubLinkIcon } from '@components/GitHubLinkIcon';
-import { LoadingOverlay } from '@components/LoadingOverlay';
-import { ViewContainer } from '@components/ViewContainer';
+import { useMemberRepositoriesQuery, useSingleMemberQuery } from 'generated/graphql';
+import { ErrorMessage } from 'components/ErrorMessage';
+import { GitHubLinkIcon } from 'components/GitHubLinkIcon';
+import { LoadingOverlay } from 'components/LoadingOverlay';
+import { ViewContainer } from 'components/ViewContainer';
 import { useParams } from 'react-router-dom';
-import { useSingleMemberQuery } from '@queries';
 
 export const ContributorDetails = () => {
   const { id } = useParams();
-  const { error, data, fetchMore, loading } = useSingleMemberQuery({
-    notifyOnNetworkStatusChange: true,
+  const {
+    error: singleMemberError,
+    data: singleMemberData,
+    loading: singleMemberLoading,
+  } = useSingleMemberQuery({
     variables: { login: id ?? '' },
   });
 
-  if (error) return <ErrorMessage message={error.message} />;
+  const {
+    error: repositoriesError,
+    data: repositoriesData,
+    loading: repositoriesLoading,
+  } = useMemberRepositoriesQuery({
+    notifyOnNetworkStatusChange: true,
+    variables: { login: id ?? '' },
+    fetchPolicy: 'no-cache'
+  });
 
-  const userData = data?.user;
+  if (singleMemberError || repositoriesError)
+    return <ErrorMessage message={(singleMemberError ?? repositoriesError!).message} />;
+
+  const userData = singleMemberData?.user;
+  const reposData = repositoriesData?.user?.repositoriesContributedTo?.nodes;
 
   return (
     <LoadingOverlay
-      loading={loading}
+      loading={singleMemberLoading || repositoriesLoading}
     >
       {userData && (
         <ViewContainer>
@@ -47,6 +62,7 @@ export const ContributorDetails = () => {
           </div>
         </ViewContainer>
       )}
+      {reposData && <p>Test</p>}
     </LoadingOverlay>
   );
 };

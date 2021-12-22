@@ -1,11 +1,11 @@
 import './ContributorsList.styles.css';
-import { ErrorMessage } from '@components/ErrorMessage';
-import { FetchMoreButton } from '@components/FetchMoreButton';
-import { LoadingOverlay } from '@components/LoadingOverlay';
+import { ErrorMessage } from 'components/ErrorMessage';
+import { FetchMoreButton } from 'components/FetchMoreButton';
+import { LoadingOverlay } from 'components/LoadingOverlay';
 import { MembersTable } from './MembersTable';
-import { ViewContainer } from '@components/ViewContainer';
+import { ViewContainer } from 'components/ViewContainer';
 import { compact } from 'lodash';
-import { useMembersQuery } from '@queries';
+import { useMembersQuery } from 'generated/graphql';
 
 export enum ColumnNames {
   Contributions = 'Contributions',

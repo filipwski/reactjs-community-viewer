@@ -21977,7 +21977,7 @@ export type MemberRepositoriesQueryVariables = Exact<{
 }>;
 
 
-export type MemberRepositoriesQuery = { __typename?: 'Query', user?: { __typename?: 'User', repositories: { __typename?: 'RepositoryConnection', totalCount: number } } | null | undefined };
+export type MemberRepositoriesQuery = { __typename?: 'Query', user?: { __typename?: 'User', repositoriesContributedTo: { __typename?: 'RepositoryConnection', nodes?: Array<{ __typename?: 'Repository', description?: string | null | undefined, name: string, url: any } | null | undefined> | null | undefined } } | null | undefined };
 
 export type MembersQueryVariables = Exact<{
   cursor?: InputMaybe<Scalars['String']>;
@@ -21997,8 +21997,12 @@ export type SingleMemberQuery = { __typename?: 'Query', user?: { __typename?: 'U
 export const MemberRepositoriesDocument = gql`
     query memberRepositories($login: String!, $cursor: String) {
   user(login: $login) {
-    repositories(privacy: PUBLIC) {
-      totalCount
+    repositoriesContributedTo(first: 10, after: $cursor) {
+      nodes {
+        description
+        name
+        url
+      }
     }
   }
 }

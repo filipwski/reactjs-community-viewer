@@ -1,7 +1,7 @@
 import './App.styles.css';
 import { Route, Routes } from 'react-router-dom'; 
-import { ContributorDetails } from '@components/ContributorDetails';
-import { ContributorsList } from '@components/ContributorsList';
+import { ContributorDetails } from 'components/ContributorDetails';
+import { ContributorsList } from 'components/ContributorsList';
 
 export const App = () => (
   <>

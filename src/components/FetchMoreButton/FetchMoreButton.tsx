@@ -1,3 +1,5 @@
+import './FetchMoreButton.styles.css';
+
 type Props = {
   onClick: () => void;
   disabled: boolean;

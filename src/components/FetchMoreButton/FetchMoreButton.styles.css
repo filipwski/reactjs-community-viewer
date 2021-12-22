@@ -12,6 +12,7 @@
 
 .fetch-more-button:hover:not(:disabled) {
   background: linear-gradient(163deg, rgba(88,182,21,1) 0%, rgba(9,97,121,1) 68%);
+  cursor: pointer;
 }
 
 .fetch-more-button:disabled {

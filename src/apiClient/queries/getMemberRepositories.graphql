@@ -1,7 +1,11 @@
 query memberRepositories($login: String!, $cursor: String) {
   user(login: $login) {
-    repositories(privacy: PUBLIC) {
-      totalCount
+    repositoriesContributedTo(first: 10, after: $cursor) {
+      nodes {
+        description
+        name
+        url
+      }
     }
   }
 }
