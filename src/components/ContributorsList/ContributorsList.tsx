@@ -7,47 +7,6 @@ import { ViewContainer } from 'components/ViewContainer';
 import { compact } from 'lodash';
 import { useMembersQuery } from 'generated/graphql';
 
-export enum ColumnNames {
-  Contributions = 'Contributions',
-  Followers = 'Followers',
-  Gists = 'Gists',
-  GitHubProfile = 'GitHub Profile',
-  Name = 'Name',
-  Repositories = 'Repositories',
-}
-
-const columns = [{
-  Header: 'Ranking of community contributors',
-  columns: [
-    {
-      Header: ColumnNames.Name,
-      accessor: 'name',
-      disableSortBy: true,
-    },
-    {
-      Header: ColumnNames.Contributions,
-      accessor: 'contributionsCollection.contributionCalendar.totalContributions',
-    },
-    {
-      Header: ColumnNames.Repositories,
-      accessor: 'repositories.totalCount',
-    },
-    {
-      Header: ColumnNames.Gists,
-      accessor: 'gists.totalCount',
-    },
-    {
-      Header: ColumnNames.Followers,
-      accessor: 'followers.totalCount',
-    },
-    {
-      Header: ColumnNames.GitHubProfile,
-      accessor: 'url',
-      disableSortBy: true
-    },
-  ],
-}];
-
 export const ContributorsList = () => {
   const { error, data, fetchMore, loading } = useMembersQuery({ notifyOnNetworkStatusChange: true });
 
@@ -83,7 +42,7 @@ export const ContributorsList = () => {
     >
       {members && (
         <ViewContainer>
-          <MembersTable columns={columns} data={members} />
+          <MembersTable data={members} />
           <FetchMoreButton
             onClick={onFetchMoreClick}
             disabled={allMembersDownloaded}

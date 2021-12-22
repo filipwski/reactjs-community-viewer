@@ -1,64 +1,56 @@
-import { Column, useSortBy, useTable } from 'react-table';
-import { ColumnNames } from './ContributorsList';
-import { Dictionary } from 'lodash';
-import { GitHubLinkIcon } from 'components/GitHubLinkIcon';
-import { Link } from 'react-router-dom';
+import { Table, TableDictionary, TableProps, renderGitHubLinkIcon, renderRouterLink } from 'components/Table';
+import { Cell } from 'react-table';
 
-type Data = Dictionary<string | number | Data | undefined | null>;
+enum ColumnNames {
+  Contributions = 'Contributions',
+  Followers = 'Followers',
+  Gists = 'Gists',
+  GitHubProfile = 'GitHub Profile',
+  Name = 'Name',
+  Repositories = 'Repositories',
+}
 
-type Props = {
-  columns: Column<Data>[],
-  data: Data[],
+const columns = [{
+  Header: 'Ranking of community contributors',
+  columns: [
+    {
+      Header: ColumnNames.Name,
+      accessor: 'name',
+      disableSortBy: true,
+    },
+    {
+      Header: ColumnNames.Contributions,
+      accessor: 'contributionsCollection.contributionCalendar.totalContributions',
+    },
+    {
+      Header: ColumnNames.Repositories,
+      accessor: 'repositories.totalCount',
+    },
+    {
+      Header: ColumnNames.Gists,
+      accessor: 'gists.totalCount',
+    },
+    {
+      Header: ColumnNames.Followers,
+      accessor: 'followers.totalCount',
+    },
+    {
+      Header: ColumnNames.GitHubProfile,
+      accessor: 'url',
+      disableSortBy: true
+    },
+  ],
+}];
+
+const renderCell = <T extends TableDictionary>(cell: Cell<T>) => {
+  switch (cell.column.Header) {
+  case ColumnNames.Name:
+    return renderRouterLink(cell, `contributor/${cell.row.original.login}`);
+  case ColumnNames.GitHubProfile:
+    return renderGitHubLinkIcon(cell);
+  }
 };
-export const MembersTable = ({ columns, data }: Props) => {
-  const {
-    getTableProps, getTableBodyProps, headerGroups, rows, prepareRow,
-  } = useTable({ columns, data }, useSortBy);
 
-  /* eslint-disable react/jsx-key */
-  return (
-    <table {...getTableProps()}>
-      <thead>
-        {headerGroups.map(headerGroup => (
-          <tr {...headerGroup.getHeaderGroupProps()}>
-            {headerGroup.headers.map(column => (
-              <th {...column.getHeaderProps(column.getSortByToggleProps())}>
-                {column.render('Header')}
-                <span>
-                  {column.isSorted
-                    ? column.isSortedDesc
-                      ? ' ▼'
-                      : ' ▲'
-                    : ''}
-                </span>
-              </th>
-            ))}
-          </tr>
-        ))}
-      </thead>
-      <tbody {...getTableBodyProps()}>
-        {rows.map((row) => {
-          prepareRow(row);
-          return (
-            <tr {...row.getRowProps()}>
-              {row.cells.map(cell => (
-                cell.column.Header === ColumnNames.Name
-                  ? <td {...cell.getCellProps()}>
-                    <Link to={`contributor/${cell.row.original.login}`}>{cell.render('Cell')}</Link>
-                  </td>
-                  : cell.column.Header === ColumnNames.GitHubProfile
-                    ? <td {...cell.getCellProps()}>
-                      <GitHubLinkIcon
-                        className="table-github-icon"
-                        href={cell.value}
-                      />
-                    </td>
-                    : <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
-              ))}
-            </tr>
-          );
-        })}
-      </tbody>
-    </table>
-  );
-};
+export const MembersTable = <T extends TableDictionary>({ data }: Pick<TableProps<T>, 'data'>) => (
+  <Table columns={columns} data={data} renderCell={renderCell} />
+);

@@ -3,8 +3,11 @@ import { useMemberRepositoriesQuery, useSingleMemberQuery } from 'generated/grap
 import { ErrorMessage } from 'components/ErrorMessage';
 import { GitHubLinkIcon } from 'components/GitHubLinkIcon';
 import { LoadingOverlay } from 'components/LoadingOverlay';
+import { RepositoriesTable } from './RepositoriesTable';
 import { ViewContainer } from 'components/ViewContainer';
+import { compact } from 'lodash';
 import { useParams } from 'react-router-dom';
+// import { FetchMoreButton } from 'components/FetchMoreButton';
 
 export const ContributorDetails = () => {
   const { id } = useParams();
@@ -30,7 +33,27 @@ export const ContributorDetails = () => {
     return <ErrorMessage message={(singleMemberError ?? repositoriesError!).message} />;
 
   const userData = singleMemberData?.user;
-  const reposData = repositoriesData?.user?.repositoriesContributedTo?.nodes;
+  const reposData = compact(repositoriesData?.user?.repositoriesContributedTo?.nodes);
+
+  // const onFetchMoreClick = () => fetchMore({
+  //   variables: { cursor },
+  //   updateQuery: (previousResults, { fetchMoreResult }) => {
+  //     const oldMemberValues = previousResults.organization?.membersWithRole.nodes;
+  //     const newMemberValues = fetchMoreResult?.organization?.membersWithRole.nodes;
+  //     if (!newMemberValues || !oldMemberValues) return previousResults;
+
+  //     return {
+  //       organization: {
+  //         membersWithRole: {
+  //           pageInfo: {
+  //             endCursor: fetchMoreResult?.organization?.membersWithRole.pageInfo?.endCursor,
+  //           },
+  //           nodes: [...oldMemberValues, ...newMemberValues],
+  //         }
+  //       }
+  //     };
+  //   },
+  // });
 
   return (
     <LoadingOverlay
@@ -60,9 +83,13 @@ export const ContributorDetails = () => {
               />
             </div>
           </div>
+          {reposData && (
+            // <RepositoriesTable data={reposData} />
+            // <FetchMoreButton onClick={} />
+            <></>
+          )}
         </ViewContainer>
       )}
-      {reposData && <p>Test</p>}
     </LoadingOverlay>
   );
 };
