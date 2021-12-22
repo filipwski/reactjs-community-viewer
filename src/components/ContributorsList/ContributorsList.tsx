@@ -1,5 +1,6 @@
 import './ContributorsList.styles.css';
 import { ErrorMessage } from '@components/ErrorMessage';
+import { FetchMoreButton } from '@components/FetchMoreButton';
 import { LoadingOverlay } from '@components/LoadingOverlay';
 import { MembersTable } from './MembersTable';
 import { ViewContainer } from '@components/ViewContainer';
@@ -83,13 +84,10 @@ export const ContributorsList = () => {
       {members && (
         <ViewContainer>
           <MembersTable columns={columns} data={members} />
-          <button
+          <FetchMoreButton
             onClick={onFetchMoreClick}
-            className="fetch-more-button"
             disabled={allMembersDownloaded}
-          >
-            Fetch more
-          </button>
+          />
         </ViewContainer>
       )}
     </LoadingOverlay>
