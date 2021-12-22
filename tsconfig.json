@@ -7,6 +7,11 @@
       "esnext"
     ],
     "baseUrl": "src",
+    "paths": {
+      "@client": ["apiClient/client"],
+      "@components/*": ["components/*"],
+      "@queries": ["generated/graphql"]
+    },
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
