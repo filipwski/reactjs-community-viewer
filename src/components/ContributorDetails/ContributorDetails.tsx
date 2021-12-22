@@ -1,13 +1,13 @@
 import './ContributorDetails.styles.css';
-import { GitHubLinkIcon } from '../GitHubLinkIcon';
-import { LoadingOverlay } from '../LoadingOverlay';
-import { ViewContainer } from '../ViewContainer';
-import { useMemberWithContributionsQuery } from '../../generated/graphql';
+import { GitHubLinkIcon } from '@components/GitHubLinkIcon';
+import { LoadingOverlay } from '@components/LoadingOverlay';
+import { ViewContainer } from '@components/ViewContainer';
 import { useParams } from 'react-router-dom';
+import { useSingleMemberQuery } from '@queries';
 
 export const ContributorDetails = () => {
   const { id } = useParams();
-  const { error, data, fetchMore, loading } = useMemberWithContributionsQuery({
+  const { error, data, fetchMore, loading } = useSingleMemberQuery({
     notifyOnNetworkStatusChange: true,
     variables: { login: id ?? '' },
   });

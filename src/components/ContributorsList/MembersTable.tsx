@@ -1,7 +1,7 @@
 import { Column, useSortBy, useTable } from 'react-table';
 import { ColumnNames } from './ContributorsList';
 import { Dictionary } from 'lodash';
-import { GitHubLinkIcon } from '../GitHubLinkIcon';
+import { GitHubLinkIcon } from '@components/GitHubLinkIcon';
 import { Link } from 'react-router-dom';
 
 type Data = Dictionary<string | number | Data | undefined | null>;

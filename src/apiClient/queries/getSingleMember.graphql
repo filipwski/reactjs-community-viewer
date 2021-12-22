@@ -1,4 +1,4 @@
-query memberWithContributions($login: String!, $cursor: String) {
+query singleMember($login: String!, $cursor: String) {
   user(login: $login) {
     avatarUrl
     bio
@@ -17,14 +17,6 @@ query memberWithContributions($login: String!, $cursor: String) {
     name
     repositories(privacy: PUBLIC) {
       totalCount
-    }
-    repositoriesContributedTo(first: 10, after: $cursor) {
-      totalCount
-      nodes {
-        description
-        name
-        url
-      }
     }
     url
   }

@@ -1,9 +1,9 @@
 import './ContributorsList.styles.css';
-import { LoadingOverlay } from '../LoadingOverlay';
+import { LoadingOverlay } from '@components/LoadingOverlay';
 import { MembersTable } from './MembersTable';
-import { ViewContainer } from '../ViewContainer';
+import { ViewContainer } from '@components/ViewContainer';
 import { compact } from 'lodash';
-import { useMembersQuery } from '../../generated/graphql';
+import { useMembersQuery } from '@queries';
 import { useMemo } from 'react';
 
 export enum ColumnNames {

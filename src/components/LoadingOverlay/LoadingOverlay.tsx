@@ -7,11 +7,12 @@ type Props = PropsWithChildren<{
   loading: boolean;
 }>;
 
-export const LoadingOverlay = ({ children, loading }: Props) => (
+export const LoadingOverlay = ({ children, loading, ...rest }: Props) => (
   <Overlay
     active={loading}
     spinner={<PacmanLoader />}
     className="overlay"
+    {...rest}
   >
     {children}
   </Overlay>

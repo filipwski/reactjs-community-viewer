@@ -21971,14 +21971,6 @@ export type WorkflowRunPendingDeploymentRequestsArgs = {
   last?: InputMaybe<Scalars['Int']>;
 };
 
-export type MemberWithContributionsQueryVariables = Exact<{
-  login: Scalars['String'];
-  cursor?: InputMaybe<Scalars['String']>;
-}>;
-
-
-export type MemberWithContributionsQuery = { __typename?: 'Query', user?: { __typename?: 'User', avatarUrl: any, bio?: string | null | undefined, company?: string | null | undefined, name?: string | null | undefined, url: any, contributionsCollection: { __typename?: 'ContributionsCollection', contributionCalendar: { __typename?: 'ContributionCalendar', totalContributions: number } }, followers: { __typename?: 'FollowerConnection', totalCount: number }, gists: { __typename?: 'GistConnection', totalCount: number }, repositories: { __typename?: 'RepositoryConnection', totalCount: number }, repositoriesContributedTo: { __typename?: 'RepositoryConnection', totalCount: number, nodes?: Array<{ __typename?: 'Repository', description?: string | null | undefined, name: string, url: any } | null | undefined> | null | undefined } } | null | undefined };
-
 export type MembersQueryVariables = Exact<{
   cursor?: InputMaybe<Scalars['String']>;
 }>;
@@ -21986,69 +21978,15 @@ export type MembersQueryVariables = Exact<{
 
 export type MembersQuery = { __typename?: 'Query', organization?: { __typename?: 'Organization', membersWithRole: { __typename?: 'OrganizationMemberConnection', nodes?: Array<{ __typename?: 'User', login: string, name?: string | null | undefined, url: any, contributionsCollection: { __typename?: 'ContributionsCollection', contributionCalendar: { __typename?: 'ContributionCalendar', totalContributions: number } }, followers: { __typename?: 'FollowerConnection', totalCount: number }, gists: { __typename?: 'GistConnection', totalCount: number }, repositories: { __typename?: 'RepositoryConnection', totalCount: number } } | null | undefined> | null | undefined, pageInfo: { __typename?: 'PageInfo', endCursor?: string | null | undefined } } } | null | undefined };
 
+export type SingleMemberQueryVariables = Exact<{
+  login: Scalars['String'];
+  cursor?: InputMaybe<Scalars['String']>;
+}>;
 
-export const MemberWithContributionsDocument = gql`
-    query memberWithContributions($login: String!, $cursor: String) {
-  user(login: $login) {
-    avatarUrl
-    bio
-    company
-    contributionsCollection {
-      contributionCalendar {
-        totalContributions
-      }
-    }
-    followers {
-      totalCount
-    }
-    gists(privacy: PUBLIC) {
-      totalCount
-    }
-    name
-    repositories(privacy: PUBLIC) {
-      totalCount
-    }
-    repositoriesContributedTo(first: 10, after: $cursor) {
-      totalCount
-      nodes {
-        description
-        name
-        url
-      }
-    }
-    url
-  }
-}
-    `;
 
-/**
- * __useMemberWithContributionsQuery__
- *
- * To run a query within a React component, call `useMemberWithContributionsQuery` and pass it any options that fit your needs.
- * When your component renders, `useMemberWithContributionsQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useMemberWithContributionsQuery({
- *   variables: {
- *      login: // value for 'login'
- *      cursor: // value for 'cursor'
- *   },
- * });
- */
-export function useMemberWithContributionsQuery(baseOptions: Apollo.QueryHookOptions<MemberWithContributionsQuery, MemberWithContributionsQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<MemberWithContributionsQuery, MemberWithContributionsQueryVariables>(MemberWithContributionsDocument, options);
-      }
-export function useMemberWithContributionsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<MemberWithContributionsQuery, MemberWithContributionsQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<MemberWithContributionsQuery, MemberWithContributionsQueryVariables>(MemberWithContributionsDocument, options);
-        }
-export type MemberWithContributionsQueryHookResult = ReturnType<typeof useMemberWithContributionsQuery>;
-export type MemberWithContributionsLazyQueryHookResult = ReturnType<typeof useMemberWithContributionsLazyQuery>;
-export type MemberWithContributionsQueryResult = Apollo.QueryResult<MemberWithContributionsQuery, MemberWithContributionsQueryVariables>;
+export type SingleMemberQuery = { __typename?: 'Query', user?: { __typename?: 'User', avatarUrl: any, bio?: string | null | undefined, company?: string | null | undefined, name?: string | null | undefined, url: any, contributionsCollection: { __typename?: 'ContributionsCollection', contributionCalendar: { __typename?: 'ContributionCalendar', totalContributions: number } }, followers: { __typename?: 'FollowerConnection', totalCount: number }, gists: { __typename?: 'GistConnection', totalCount: number }, repositories: { __typename?: 'RepositoryConnection', totalCount: number } } | null | undefined };
+
+
 export const MembersDocument = gql`
     query members($cursor: String) {
   organization(login: "reactjs") {
@@ -22107,3 +22045,57 @@ export function useMembersLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<Me
 export type MembersQueryHookResult = ReturnType<typeof useMembersQuery>;
 export type MembersLazyQueryHookResult = ReturnType<typeof useMembersLazyQuery>;
 export type MembersQueryResult = Apollo.QueryResult<MembersQuery, MembersQueryVariables>;
+export const SingleMemberDocument = gql`
+    query singleMember($login: String!, $cursor: String) {
+  user(login: $login) {
+    avatarUrl
+    bio
+    company
+    contributionsCollection {
+      contributionCalendar {
+        totalContributions
+      }
+    }
+    followers {
+      totalCount
+    }
+    gists(privacy: PUBLIC) {
+      totalCount
+    }
+    name
+    repositories(privacy: PUBLIC) {
+      totalCount
+    }
+    url
+  }
+}
+    `;
+
+/**
+ * __useSingleMemberQuery__
+ *
+ * To run a query within a React component, call `useSingleMemberQuery` and pass it any options that fit your needs.
+ * When your component renders, `useSingleMemberQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useSingleMemberQuery({
+ *   variables: {
+ *      login: // value for 'login'
+ *      cursor: // value for 'cursor'
+ *   },
+ * });
+ */
+export function useSingleMemberQuery(baseOptions: Apollo.QueryHookOptions<SingleMemberQuery, SingleMemberQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<SingleMemberQuery, SingleMemberQueryVariables>(SingleMemberDocument, options);
+      }
+export function useSingleMemberLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<SingleMemberQuery, SingleMemberQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<SingleMemberQuery, SingleMemberQueryVariables>(SingleMemberDocument, options);
+        }
+export type SingleMemberQueryHookResult = ReturnType<typeof useSingleMemberQuery>;
+export type SingleMemberLazyQueryHookResult = ReturnType<typeof useSingleMemberLazyQuery>;
+export type SingleMemberQueryResult = Apollo.QueryResult<SingleMemberQuery, SingleMemberQueryVariables>;
