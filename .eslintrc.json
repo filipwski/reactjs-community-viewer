@@ -39,6 +39,7 @@
             "always"
         ],
         "sort-imports": "error",
-        "@typescript-eslint/explicit-module-boundary-types": "off"
+        "@typescript-eslint/explicit-module-boundary-types": "off",
+        "eol-last": "error"
     }
 }
