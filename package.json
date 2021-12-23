@@ -55,10 +55,5 @@
     "extends": [
       "react-app"
     ]
-  },
-  "react-dotenv": {
-    "whitelist": [
-      "GITHUB_ACCESS_TOKEN"
-    ]
   }
 }
