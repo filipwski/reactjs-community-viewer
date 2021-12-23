@@ -52,15 +52,15 @@ export const ContributorDetails = () => {
               src={memberData.avatarUrl}
             />
             <div className="user-details">
-              <p className="user-name">{memberData.name}</p>
-              <p>{memberData.bio}</p>
-              {memberData.company && <p>Works at <b>{memberData.company}</b></p>}
-              <p><b>Contributions:</b> {
+              <span className="user-name">{memberData.name}</span>
+              <span>{memberData.bio}</span>
+              {memberData.company && <span>Works at <b>{memberData.company}</b></span>}
+              <span><b>Contributions:</b> {
                 memberData.contributionsCollection.contributionCalendar.totalContributions
-              }</p>
-              <p><b>Repositories:</b> {memberData.repositories.totalCount}</p>
-              <p><b>Gists:</b> {memberData.gists.totalCount}</p>
-              <p><b>Followers:</b> {memberData.followers.totalCount}</p>
+              }</span>
+              <span><b>Repositories:</b> {memberData.repositories.totalCount}</span>
+              <span><b>Gists:</b> {memberData.gists.totalCount}</span>
+              <span><b>Followers:</b> {memberData.followers.totalCount}</span>
               <GitHubLinkIcon
                 className="github-profile-icon"
                 href={memberData.url}

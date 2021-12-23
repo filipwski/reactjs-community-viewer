@@ -23,7 +23,7 @@ const columns = [{
     },
     {
       Header: ColumnNames.GitHubProfile,
-      accessor: 'url',
+      accessor: 'html_url',
       disableSortBy: true,
     },
   ],
@@ -34,5 +34,7 @@ const renderCell = <T extends TableDictionary>(cell: Cell<T>) => {
 };
 
 export const ContributorsTable = <T extends TableDictionary>({ data }: Pick<TableProps<T>, 'data'>) => (
-  <Table className="repositories-table" columns={columns} data={data} renderCell={renderCell} />
+  <div className="contributors-table">
+    <Table className="repositories-table" columns={columns} data={data} renderCell={renderCell} />
+  </div>
 );

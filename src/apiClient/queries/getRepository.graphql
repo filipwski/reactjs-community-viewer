@@ -1,0 +1,11 @@
+query getRepository($owner: String!, $name: String!) {
+  repository(owner: $owner, name: $name) {
+    createdAt
+    description
+    homepageUrl
+    primaryLanguage {
+      name
+    }
+    url
+  }
+}
