@@ -52,15 +52,3 @@
   border-radius: 50%;
   width: 40px;
 }
-
-@media screen and (min-width:601px) {
-  .repositories-table {
-    max-width: 50vw;
-  }
-}
-
-@media screen and (max-width:600px) {
-  .repositories-table {
-    max-width: 90vw;
-  }
-}
