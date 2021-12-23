@@ -21971,6 +21971,14 @@ export type WorkflowRunPendingDeploymentRequestsArgs = {
   last?: InputMaybe<Scalars['Int']>;
 };
 
+export type GetMemberWithRepositoriesQueryVariables = Exact<{
+  login: Scalars['String'];
+  cursor?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type GetMemberWithRepositoriesQuery = { __typename?: 'Query', user?: { __typename?: 'User', avatarUrl: any, bio?: string | null | undefined, company?: string | null | undefined, name?: string | null | undefined, url: any, contributionsCollection: { __typename?: 'ContributionsCollection', contributionCalendar: { __typename?: 'ContributionCalendar', totalContributions: number } }, followers: { __typename?: 'FollowerConnection', totalCount: number }, gists: { __typename?: 'GistConnection', totalCount: number }, repositories: { __typename?: 'RepositoryConnection', totalCount: number }, repositoriesContributedTo: { __typename?: 'RepositoryConnection', pageInfo: { __typename?: 'PageInfo', endCursor?: string | null | undefined }, nodes?: Array<{ __typename?: 'Repository', description?: string | null | undefined, name: string, url: any, owner: { __typename?: 'Organization', login: string } | { __typename?: 'User', login: string } } | null | undefined> | null | undefined } } | null | undefined };
+
 export type GetMembersQueryVariables = Exact<{
   cursor?: InputMaybe<Scalars['String']>;
 }>;
@@ -21978,15 +21986,74 @@ export type GetMembersQueryVariables = Exact<{
 
 export type GetMembersQuery = { __typename?: 'Query', organization?: { __typename?: 'Organization', membersWithRole: { __typename?: 'OrganizationMemberConnection', nodes?: Array<{ __typename?: 'User', login: string, name?: string | null | undefined, url: any, contributionsCollection: { __typename?: 'ContributionsCollection', contributionCalendar: { __typename?: 'ContributionCalendar', totalContributions: number } }, followers: { __typename?: 'FollowerConnection', totalCount: number }, gists: { __typename?: 'GistConnection', totalCount: number }, repositories: { __typename?: 'RepositoryConnection', totalCount: number } } | null | undefined> | null | undefined, pageInfo: { __typename?: 'PageInfo', endCursor?: string | null | undefined } } } | null | undefined };
 
-export type GetMemberWithRepositoriesQueryVariables = Exact<{
-  login: Scalars['String'];
-  cursor?: InputMaybe<Scalars['String']>;
-}>;
 
+export const GetMemberWithRepositoriesDocument = gql`
+    query getMemberWithRepositories($login: String!, $cursor: String) {
+  user(login: $login) {
+    avatarUrl
+    bio
+    company
+    contributionsCollection {
+      contributionCalendar {
+        totalContributions
+      }
+    }
+    followers {
+      totalCount
+    }
+    gists(privacy: PUBLIC) {
+      totalCount
+    }
+    name
+    repositories(privacy: PUBLIC) {
+      totalCount
+    }
+    repositoriesContributedTo(first: 10, after: $cursor, privacy: PUBLIC) {
+      pageInfo {
+        endCursor
+      }
+      nodes {
+        description
+        name
+        owner {
+          login
+        }
+        url
+      }
+    }
+    url
+  }
+}
+    `;
 
-export type GetMemberWithRepositoriesQuery = { __typename?: 'Query', user?: { __typename?: 'User', avatarUrl: any, bio?: string | null | undefined, company?: string | null | undefined, name?: string | null | undefined, url: any, contributionsCollection: { __typename?: 'ContributionsCollection', contributionCalendar: { __typename?: 'ContributionCalendar', totalContributions: number } }, followers: { __typename?: 'FollowerConnection', totalCount: number }, gists: { __typename?: 'GistConnection', totalCount: number }, repositories: { __typename?: 'RepositoryConnection', totalCount: number }, repositoriesContributedTo: { __typename?: 'RepositoryConnection', pageInfo: { __typename?: 'PageInfo', endCursor?: string | null | undefined }, nodes?: Array<{ __typename?: 'Repository', description?: string | null | undefined, name: string, url: any } | null | undefined> | null | undefined } } | null | undefined };
-
-
+/**
+ * __useGetMemberWithRepositoriesQuery__
+ *
+ * To run a query within a React component, call `useGetMemberWithRepositoriesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetMemberWithRepositoriesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetMemberWithRepositoriesQuery({
+ *   variables: {
+ *      login: // value for 'login'
+ *      cursor: // value for 'cursor'
+ *   },
+ * });
+ */
+export function useGetMemberWithRepositoriesQuery(baseOptions: Apollo.QueryHookOptions<GetMemberWithRepositoriesQuery, GetMemberWithRepositoriesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetMemberWithRepositoriesQuery, GetMemberWithRepositoriesQueryVariables>(GetMemberWithRepositoriesDocument, options);
+      }
+export function useGetMemberWithRepositoriesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetMemberWithRepositoriesQuery, GetMemberWithRepositoriesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetMemberWithRepositoriesQuery, GetMemberWithRepositoriesQueryVariables>(GetMemberWithRepositoriesDocument, options);
+        }
+export type GetMemberWithRepositoriesQueryHookResult = ReturnType<typeof useGetMemberWithRepositoriesQuery>;
+export type GetMemberWithRepositoriesLazyQueryHookResult = ReturnType<typeof useGetMemberWithRepositoriesLazyQuery>;
+export type GetMemberWithRepositoriesQueryResult = Apollo.QueryResult<GetMemberWithRepositoriesQuery, GetMemberWithRepositoriesQueryVariables>;
 export const GetMembersDocument = gql`
     query getMembers($cursor: String) {
   organization(login: "reactjs") {
@@ -22045,67 +22112,3 @@ export function useGetMembersLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions
 export type GetMembersQueryHookResult = ReturnType<typeof useGetMembersQuery>;
 export type GetMembersLazyQueryHookResult = ReturnType<typeof useGetMembersLazyQuery>;
 export type GetMembersQueryResult = Apollo.QueryResult<GetMembersQuery, GetMembersQueryVariables>;
-export const GetMemberWithRepositoriesDocument = gql`
-    query getMemberWithRepositories($login: String!, $cursor: String) {
-  user(login: $login) {
-    avatarUrl
-    bio
-    company
-    contributionsCollection {
-      contributionCalendar {
-        totalContributions
-      }
-    }
-    followers {
-      totalCount
-    }
-    gists(privacy: PUBLIC) {
-      totalCount
-    }
-    name
-    repositories(privacy: PUBLIC) {
-      totalCount
-    }
-    repositoriesContributedTo(first: 10, after: $cursor, privacy: PUBLIC) {
-      pageInfo {
-        endCursor
-      }
-      nodes {
-        description
-        name
-        url
-      }
-    }
-    url
-  }
-}
-    `;
-
-/**
- * __useGetMemberWithRepositoriesQuery__
- *
- * To run a query within a React component, call `useGetMemberWithRepositoriesQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetMemberWithRepositoriesQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useGetMemberWithRepositoriesQuery({
- *   variables: {
- *      login: // value for 'login'
- *      cursor: // value for 'cursor'
- *   },
- * });
- */
-export function useGetMemberWithRepositoriesQuery(baseOptions: Apollo.QueryHookOptions<GetMemberWithRepositoriesQuery, GetMemberWithRepositoriesQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetMemberWithRepositoriesQuery, GetMemberWithRepositoriesQueryVariables>(GetMemberWithRepositoriesDocument, options);
-      }
-export function useGetMemberWithRepositoriesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetMemberWithRepositoriesQuery, GetMemberWithRepositoriesQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetMemberWithRepositoriesQuery, GetMemberWithRepositoriesQueryVariables>(GetMemberWithRepositoriesDocument, options);
-        }
-export type GetMemberWithRepositoriesQueryHookResult = ReturnType<typeof useGetMemberWithRepositoriesQuery>;
-export type GetMemberWithRepositoriesLazyQueryHookResult = ReturnType<typeof useGetMemberWithRepositoriesLazyQuery>;
-export type GetMemberWithRepositoriesQueryResult = Apollo.QueryResult<GetMemberWithRepositoriesQuery, GetMemberWithRepositoriesQueryVariables>;

@@ -1,5 +1,6 @@
 import { Table, TableDictionary, TableProps, renderGitHubLinkIcon, renderRouterLink } from 'components/Table';
 import { Cell } from 'react-table';
+import { RepositoryOwner } from '@octokit/graphql-schema';
 
 enum ColumnNames {
   Name = 'Name',
@@ -31,7 +32,14 @@ const columns = [{
 const renderCell = <T extends TableDictionary>(cell: Cell<T>) => {
   switch (cell.column.Header) {
   case ColumnNames.Name:
-    return renderRouterLink(cell, `contributor/${cell.row.original.login}`);
+    return renderRouterLink(
+      cell,
+      `/repository/${
+        (cell.row.original.owner as unknown as RepositoryOwner).login
+      }/${
+        cell.row.original.name
+      }`,
+    );
   case ColumnNames.Description:
     return <>{cell.value ?? 'No description available...'}</>;
   case ColumnNames.Repository:

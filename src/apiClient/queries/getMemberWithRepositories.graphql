@@ -25,6 +25,9 @@ query getMemberWithRepositories($login: String!, $cursor: String) {
       nodes {
         description
         name
+        owner {
+          login
+        }
         url
       }
     }

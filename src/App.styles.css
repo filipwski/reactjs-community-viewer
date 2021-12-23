@@ -18,12 +18,16 @@ header, footer {
 }
 
 header {
+  align-items: center;
+  display: inline-flex;
+  flex-direction: row;
   height: 70px;
+  justify-content: space-between;
+  width: 100%;
 }
 
 header > h1 {
-  margin: 0px;
-  padding: 10px;
+  margin: 10px;
 }
 
 header > h1 > span {
@@ -36,4 +40,17 @@ footer {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.home-link {
+  justify-self: flex-end;
+  margin-right: 10px;
+}
+
+.home-link > a {
+  color: azure;
+}
+
+.home-link > a:hover {
+  color: rgb(142, 187, 75);
 }
