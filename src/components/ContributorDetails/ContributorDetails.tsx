@@ -12,7 +12,8 @@ import { useParams } from 'react-router-dom';
 export const ContributorDetails = () => {
   const { id } = useParams();
   const { error, data, loading, fetchMore } = useGetMemberWithRepositoriesQuery({
-    variables: { login: id ?? '' }
+    notifyOnNetworkStatusChange: true,
+    variables: { login: id ?? '' },
   });
 
   if (error) return <ErrorMessage message={error.message} />;
