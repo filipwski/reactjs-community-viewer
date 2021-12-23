@@ -12,7 +12,7 @@
 }
 
 .repository-name {
-  font-size: x-large;
+  font-size: xx-large;
 }
 
 .repository-homepage-link {
@@ -21,4 +21,8 @@
 
 .repository-homepage-link:hover {
   color: rgb(142, 187, 75);;
+}
+
+.repository-description {
+  font-size: larger;
 }

@@ -39,6 +39,7 @@ export const RepositoryDetails = () => {
   };
 
   const repositoryData = repository?.repository;
+  const repositoryCreatingDate = new Date(repositoryData?.createdAt).toLocaleDateString();
   const allContributorsDownloaded = isEmpty(data);
 
   return (
@@ -47,8 +48,12 @@ export const RepositoryDetails = () => {
         {repositoryData && (
           <div className="repository-details">
             <span className="repository-name"><b>{name}</b></span>
-            <span className="">created by <b>{owner}</b></span>
-            <span>{repositoryData.description}</span>
+            <span>created by <b>{owner}</b></span>
+            {repositoryData.primaryLanguage?.name && (
+              <span>written primarily in <b>{repositoryData.primaryLanguage.name}</b></span>
+            )}
+            <span>published at <b>{repositoryCreatingDate}</b></span>
+            <span className="repository-description">{repositoryData.description}</span>
             {repositoryData.homepageUrl && repositoryData.homepageUrl !== repositoryData.url && (
               <span>
                 <span>Homepage: </span>
