@@ -7,6 +7,8 @@ enum ColumnNames {
   GitHubProfile = 'GitHub Profile',
 }
 
+// GitHub's REST API offers much less details in one request
+// TODO: Get more fields in the GraphQL version
 const columns = [{
   Header: 'Contributors',
   columns: [
